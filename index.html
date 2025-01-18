@@ -1,8 +1,23 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
+        <!-- Meta Tags -->
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="A variation of the classic web game Snake, 
+                                          where you collect numbered circles to grow 
+                                          your snake while avoiding spikes">
+        <meta name="keywords" content="number snake, snake game, web game, browser game, 
+                                       arcade game, snake, numbered circles, spikes, 
+                                       orange spikes, red spikes, pink spikes, 
+                                       arrow keys, score points, growing snake,
+                                       numbers, grow, addictive">
+        <meta name="author" content="Sam Zuckerman">
+
+        <!-- Title and Stylesheet -->
         <title>Number Snake</title>
         <link rel="stylesheet" href="styles.css">
+
     </head>
     <body>
         <!-- Header and Score -->
@@ -12,12 +27,58 @@
         <!-- Game Board -->
         <canvas id="game-board" width="400" height="400"></canvas>
 
+        <!-- Instructions Button -->
+        <button id="instructions-btn" onclick="showInstructions()">How to Play</button>
+
         <!-- Game Over Screen -->
         <div class="game-over" id="game-over">
-            Game Over!
+            Game Over!<br>
             <button onclick="resetGame()">Play Again</button>
         </div>
 
+        <!-- Instructions Popup -->
+        <div id="instructions-popup" class="popup">
+            <div class="popup-content">
+
+                <!-- Popup Title -->
+                <h2>How to Play Number Snake</h2>
+
+                <!-- Popup Instructions -->
+                Use the <b>arrow keys</b> to move the snake
+                <canvas id="snake-example" width="80" height="30"></canvas>
+                <br><br>
+
+                Eat the <b>numbered circles</b> to grow your snake
+                <canvas id="food-example" width="30" height="30"></canvas>
+                <br><br>
+
+                Each numbered circle will contain a number from <b>1</b> to <b>5</b>
+                <br><br>
+
+                This number represents how many <b>points</b> the circle is worth,<br>
+                and how much your snake will <b>grow</b>
+                <br><br>
+
+                <b>Orange</b> spikes are <b>stationary</b>, and will appear at game start
+                <canvas id="orange-spike-example" width="30" height="30"></canvas>
+                <br><br>
+
+                <b>Red</b> spikes move <b>slowly</b> horizontally and vertically,<br>
+                and begin appearing at a game score of 25 and above
+                <canvas id="red-spike-example" width="30" height="30"></canvas>
+                <br><br>
+
+                <b>Pink</b> spikes move <b>fast</b> in all directions,<br>
+                and begin appearing at a game score of 65 and above
+                <canvas id="pink-spike-example" width="30" height="30"></canvas>
+                <br>
+
+                <button id="start-game-btn">Ok, Got It!</button>
+                <br>
+            </div>
+        </div>
+
+        <!-- Include Files -->
         <script src="config.js"></script>
         <script src="board.js"></script>
         <script src="snake.js"></script>
