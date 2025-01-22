@@ -65,7 +65,7 @@ function endGame() {
 
 // Resets the Game
 function resetGame() {
-
+    
     // Reset Game States and Variables
     isGameOver = false;
     snake = [{x: 10, y: 10}];
