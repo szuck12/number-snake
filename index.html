@@ -18,23 +18,32 @@
         <title>Number Snake</title>
         <link rel="stylesheet" href="styles.css">
 
-        <!-- Google Tag, For Tracking Analytic -->
+        <!-- Google Tag, For Tracking Analytics -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-ELFPXN94BH"></script>
+
+        <!-- Initialize Google Analytics Tracking -->
         <script>
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
 
+            gtag('js', new Date());
             gtag('config', 'G-ELFPXN94BH');
         </script>
+        
     </head>
     <body>
         <!-- Header and Score -->
         <h1>Number Snake</h1>
         <div id="score">Score: 0</div>
 
+        <!-- Mode Selection Buttons -->
+        <div id="mode-buttons">
+            <button id="normal-mode-btn" onclick="setGameMode('normal')">Normal Mode</button>
+            <button id="fast-mode-btn" onclick="setGameMode('fast')">Fast Mode</button>
+        </div>
+
         <!-- Game Board -->
-        <canvas id="game-board" width="400" height="400"></canvas>
+        <canvas id="game-board" width="360" height="360"></canvas>
 
         <!-- Instructions Button -->
         <button id="instructions-btn" onclick="showInstructions()">How to Play</button>
@@ -82,7 +91,7 @@
                 <canvas id="pink-spike-example" width="30" height="30"></canvas>
                 <br>
 
-                <button id="start-game-btn">Ok, Got It!</button>
+                <button id="ready-game-btn">Ok, Got It!</button>
                 <br>
             </div>
         </div>

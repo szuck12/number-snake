@@ -1,73 +1,135 @@
-// Initialize Game Elements
+// Initialize game elements
 const canvas = document.getElementById('game-board');
 const ctx = canvas.getContext('2d');
 const scoreElement = document.getElementById('score');
 const gameOverElement = document.getElementById('game-over');
 const instructionsPopup = document.getElementById('instructions-popup');
-const startGameBtn = document.getElementById('start-game-btn');
+const readyGameBtn = document.getElementById('ready-game-btn');
 
-// Calculate Tile Count Based on Canvas Width
+// Calculate tile count based on canvas width
 const tileCount = canvas.width / gridSize;
 
-// Add Event Listeners
-document.addEventListener('keydown', changeDirection);
-startGameBtn.addEventListener('click', startGame);
+// Mode buttons
+const modeButtons = document.getElementById('mode-buttons');
+const normalButton = document.getElementById('normal-mode-btn');
+const fastButton = document.getElementById('fast-mode-btn');
 
-// Show Instructions Initially
+readyGameBtn.addEventListener('click', readyGame);
+
+// Show instructions initially
 instructionsPopup.style.display = 'block';
-let gameStarted = false;
+gameStarted = false;
+gameReady = false;
 
-// Function to Show Instructions
+// Function to show instructions
 function showInstructions() {
+
+    gameReady = false;
 
     instructionsPopup.style.display = 'block';
     drawExamples();
     
+    // Pauses game if instructions are clicked during game
     if (gameStarted) {
-        // Pause the game if it's already running
         clearTimeout(gameLoop);
     }
 }
 
-// Function to Start Game
-function startGame() {
+// Add button hover effect
+function addButtonHover() {
+    modeButtons.classList.add('hover');
+    modeButtons.classList.remove('no-hover');
+}
+// Remove button hover effect
+function removeButtonHover() {
+    modeButtons.classList.remove('hover');
+    modeButtons.classList.add('no-hover');
+}
 
-    instructionsPopup.style.display = 'none';
-
+// Initialize mode buttons and length of frame
+function setGameMode(mode) {
+    
     if (!gameStarted) {
-        gameStarted = true;
-        drawGame();
-    } else {
-        // Resume game if it was paused
-        drawGame();
+        normalButton.style.backgroundColor = 'rgba(51, 51, 51, 0.9)';
+        fastButton.style.backgroundColor = 'rgba(51, 51, 51, 0.9)';
+
+        if (mode === 'normal') {
+            normalButton.style.backgroundColor = '#4F5053'; 
+            timeFrame = 150;
+        } else if (mode === 'fast') {
+            fastButton.style.backgroundColor = '#4F5053';
+            timeFrame = 100;
+        }
     }
 }
 
+// Function to start game
+function readyGame() {
+
+    // Clear any existing game loop before starting a new one
+    if (gameLoop) {
+        clearTimeout(gameLoop);
+    }
+    
+    gameReady = true; 
+    addButtonHover();
+
+    instructionsPopup.style.display = 'none';
+    drawGame();
+
+    // Set gameStarted when key is pressed, and remove mode button hover effect
+    const keydownHandler = function(event) {
+        // Only process arrow keys if instructions aren't showing
+        if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key) && 
+            gameReady && !isGameOver && instructionsPopup.style.display === 'none') {
+            if (!gameStarted) {
+                gameStarted = true;
+                removeButtonHover();
+            }
+            changeDirection(event);
+        }
+    };
+
+    // Add new keydown listener
+    document.addEventListener('keydown', keydownHandler);
+
+    // If a mode button is clicked, set mode button color and length of frame
+    document.querySelectorAll('#mode-buttons button').forEach(button => {
+        button.addEventListener('click', function () {
+            if (!gameStarted) {
+                setGameMode(this.id === 'normal-mode-btn' ? 'normal' : 'fast');
+            }
+        });
+    });
+}
+
+// Responsible for drawing one frame of snake game
 function drawGame() {
     setBoard();
 
-    // Move Snake and Spikes
+    // Move snake and spikes
     moveSnake();
     moveRedSpikes();
     movePinkSpikes();
 
-    // Draw Snake, Food, and Spikes
+    // Draw snake, food, and spikes
     drawSnake();
     drawFood();
     drawAllSpikes();
     
     if (gameOver()) {
         endGame();
+        addButtonHover();
         return;
     }
     
     checkFoodCollision();
 
-    // Run a "Move" of Game Every 100 milliseconds
-    gameLoop = setTimeout(drawGame, 100);
+    // Run a frame of game every "timeFrame" milliseconds
+    gameLoop = setTimeout(drawGame, timeFrame);
 }
 
-// Draw Example Illustrations As Part of Instructions
+// Draw example illustrations as part of instructions
 function drawExamples() {
 
     const snakeCanvas = document.getElementById('snake-example');
@@ -77,7 +139,7 @@ function drawExamples() {
     for(let i = 0; i < 4; i++) {
         const greenValue = 175 - (i * 2);
         snakeCtx.fillStyle = `rgb(76, ${greenValue}, 80)`;
-        snakeCtx.fillRect(i * 20, 6, 18, 18);  // Centered vertically
+        snakeCtx.fillRect(i * 20, 6, 18, 18);
         snakeCtx.strokeStyle = '#FFFFFF';
         snakeCtx.strokeRect(i * 20, 6, 18, 18);
     }
@@ -157,5 +219,8 @@ function drawExamples() {
     });
 }
 
-// Draw Examples When Page Loads
-drawExamples(); 
+// Draw examples when page loads
+drawExamples();
+
+// Initialize with game mode normal
+setGameMode('normal');

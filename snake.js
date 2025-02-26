@@ -1,4 +1,4 @@
-// Initialize Snake at Game Start
+// Initialize snake at game start
 let snake = [
     {x: 10, y: 10},
 ];
@@ -6,18 +6,18 @@ let snake = [
 // lastDirection holds the last direction the snake moved in the current frame
 let lastDirection = null;
 
-// pendingDirection holds a "queued" direction change. This occurs when the 
+// pendingDirection holds a "queued" direction change. this occurs when the 
 // user tries to complete two valid turns within the same frame
 let pendingDirection = null;
 
-// Draws the Snake
+// Draws the snake
 function drawSnake() {
     snake.forEach((segment, index) => {
 
-        // Allows For Snake To Darken Towards Tail
+        // Allows for snake to darken towards tail
         const greenValue = 175 - (index * 2);
 
-        // Creates Snake
+        // Creates snake
         ctx.fillStyle = `rgb(76, ${greenValue}, 80)`;
         const x = segment.x * gridSize;
         const y = segment.y * gridSize;
@@ -27,7 +27,7 @@ function drawSnake() {
     });
 }
 
-// Moves the Snake on the Game Board
+// Moves the snake on the game board
 function moveSnake() {
 
     // Set lastDirection based on current movement if not already set
@@ -38,7 +38,7 @@ function moveSnake() {
         else if (dx === 1) lastDirection = 'right';
     }
 
-    // Move the Snake
+    // Move the snake
     const head = {x: snake[0].x + dx, y: snake[0].y + dy};
     snake.unshift(head);
     if (!checkFoodCollision() && !isGameOver) {
@@ -50,7 +50,7 @@ function moveSnake() {
 
     // After movement, apply pending direction change (if there is one)
     if (pendingDirection) {
-        console.log('Applying pending direction:', pendingDirection);
+        
         switch(pendingDirection) {
             case 'left':
                 dx = -1;
@@ -92,7 +92,7 @@ function isValidSecondTurn(direction, lastDirection) {
     return validTurns[lastDirection]?.includes(direction);
 }
 
-// Function to Change Direction of Snake
+// Function to change direction of snake
 function changeDirection(event) {
 
     // Key codes for arrow keys
@@ -152,4 +152,4 @@ function changeDirection(event) {
             pendingDirection = newDirection;
         }
     }
-} 
+}
