@@ -23,7 +23,7 @@ function setBoard() {
         ctx.stroke();
     }
 }
-
+ 
 // Checks if the game has ended
 function gameOver() {
     const head = snake[0];
