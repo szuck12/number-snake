@@ -81,6 +81,12 @@ button:hover {
     pointer-events: none;
 }
 
+/* Game Board Wrapper Styling */
+#game-board-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
 /* Game Board Styling */
 #game-board {
     background-color: rgba(51, 51, 51, 0.9);

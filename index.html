@@ -30,17 +30,22 @@
             <button id="fast-mode-btn" onclick="setGameMode('fast')">Fast Mode</button>
         </div>
 
-        <!-- Game Board -->
-        <canvas id="game-board" width="360" height="360"></canvas>
+        <!-- Game Board Wrapper-->
+        <div id="game-board-wrapper">
+
+            <!-- Game Board -->
+            <canvas id="game-board" width="360" height="360"></canvas>
+
+            <!-- Game Over Screen -->
+            <div class="game-over" id="game-over">
+                Game Over!<br>
+                <button onclick="resetGame()">Play Again</button>
+            </div>
+
+        </div>
 
         <!-- Instructions Button -->
         <button id="instructions-btn" onclick="showInstructions()">How to Play</button>
-
-        <!-- Game Over Screen -->
-        <div class="game-over" id="game-over">
-            Game Over!<br>
-            <button onclick="resetGame()">Play Again</button>
-        </div>
 
         <!-- Instructions Popup -->
         <div id="instructions-popup" class="popup">
